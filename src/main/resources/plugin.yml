@@ -1,0 +1,19 @@
+name: SimpleEconomy
+version: '1.0'
+main: me.aic1x.simpleEconomy.SimpleEconomy
+api-version: '1.21'
+authors: [ aic1x ]
+description: A simple economy Plugin for minecraft spigot servers.
+commands:
+  balance:
+    description: Shows balance.
+    usage: /<command> <Player>
+  pay:
+    description: Send a player amount of money.
+    usage: /<command> <Player> <amount>
+  setbalance:
+    description: Admin command, for setting a new balance.
+    usage: /<command> <Player> <amount>
+permissions:
+  permissions.admin:
+    description: Allows the usage of Admin commands.
