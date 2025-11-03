@@ -20,12 +20,13 @@ public class MoneyManager {
 
     Map<UUID, Balance> balances = new HashMap<>();
     class Balance{
-        double balance = 1000;
+        double balance;
         UUID uuid;
         String playername;
         public Balance(UUID uuid, String playername){
             this.uuid = uuid;
             this.playername = playername;
+            double balance = plugin.getConfig().getDouble("start-value");
         }
     }
     public void registerUser(UUID uuid, String playername){
@@ -45,6 +46,7 @@ public class MoneyManager {
     public boolean payUser(UUID sender, UUID target, double val){
         Balance s = balances.get(sender);
         Balance t = balances.get(target);
+
         if(s.balance>=val){
             double nbals = s.balance-val;
             double nbalt = t.balance+val;

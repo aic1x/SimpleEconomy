@@ -25,13 +25,19 @@ public class PayCommand implements CommandExecutor {
                 Player target = Bukkit.getServer().getPlayerExact(playername);
                 if(target==null){
                     p.sendMessage(ChatColor.RED+"Player is not online.");
+                }else if(p.getUniqueId()==target.getUniqueId()){
+                    p.sendMessage(ChatColor.RED+"You cant send money to yourself.");
                 }else{
-                    boolean result = moneyManager.payUser(p.getUniqueId(),target.getUniqueId(),val);
-                    if(result){
-                        p.sendMessage(ChatColor.GREEN+"You successfully send "+ChatColor.GOLD+val+ChatColor.GREEN+" coins to "+ChatColor.RED+target.getDisplayName()+ChatColor.GREEN+".");
-                        target.sendMessage(ChatColor.GREEN+"You recieved "+ChatColor.GOLD+val+ChatColor.GREEN+" coins from "+ChatColor.RED+p.getDisplayName()+ChatColor.GREEN+".");
-                    }else{
-                        p.sendMessage("You dont have this amount on your bank account.");
+                    try {
+                        boolean result = moneyManager.payUser(p.getUniqueId(), target.getUniqueId(), val);
+                        if (result) {
+                            p.sendMessage(ChatColor.GREEN + "You successfully send " + ChatColor.GOLD + val + ChatColor.GREEN + " coins to " + ChatColor.RED + target.getDisplayName() + ChatColor.GREEN + ".");
+                            target.sendMessage(ChatColor.GREEN + "You recieved " + ChatColor.GOLD + val + ChatColor.GREEN + " coins from " + ChatColor.RED + p.getDisplayName() + ChatColor.GREEN + ".");
+                        } else {
+                            p.sendMessage("You dont have this amount on your bank account.");
+                        }
+                    }catch (Exception e){
+                        p.sendMessage("Wrong usage. Use /pay <Player> <amount>");
                     }
                 }
             }else{

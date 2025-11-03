@@ -1,5 +1,5 @@
 name: SimpleEconomy
-version: '1.0'
+version: '1.1'
 main: me.aic1x.simpleEconomy.SimpleEconomy
 api-version: '1.21'
 authors: [ aic1x ]

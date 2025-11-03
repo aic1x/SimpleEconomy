@@ -22,14 +22,22 @@ public class BalanceCommand implements CommandExecutor {
 
         if (commandSender instanceof Player p) {
             if (strings.length == 0) {
-                double bal = moneyManager.getBalance(p.getUniqueId());
-                p.sendMessage(ChatColor.GREEN + "Your balance is " + ChatColor.GOLD + bal + ChatColor.GREEN + " coins.");
-            } else if (strings.length > 0 && p.hasPermission("permissions.admin")) {
+                try {
+                    double bal = moneyManager.getBalance(p.getUniqueId());
+                    p.sendMessage(ChatColor.GREEN + "Your balance is " + ChatColor.GOLD + bal + ChatColor.GREEN + " coins.");
+                } catch (Exception e) {
+                    p.sendMessage("Wrong usage. Use /balance <amount>");
+                }
+                } else if (strings.length > 0 && p.hasPermission("permissions.admin")) {
                 String playername = strings[0];
                 Player target = Bukkit.getServer().getPlayerExact(playername);
                 if (target != null) {
-                    double bal = moneyManager.getBalance(target.getUniqueId());
-                    p.sendMessage(ChatColor.GREEN + target.getDisplayName() + "'s balance is " + ChatColor.GOLD + bal + ChatColor.GREEN + " coins.");
+                    try {
+                        double bal = moneyManager.getBalance(target.getUniqueId());
+                        p.sendMessage(ChatColor.GREEN + target.getDisplayName() + "'s balance is " + ChatColor.GOLD + bal + ChatColor.GREEN + " coins.");
+                    }catch (Exception e){
+                        p.sendMessage(ChatColor.RED+"Wrong usage. Use /balance <Player> <amount>");
+                    }
                 } else {
                     p.sendMessage(ChatColor.RED + "Player is not online.");
                 }
@@ -44,8 +52,12 @@ public class BalanceCommand implements CommandExecutor {
                 String playername = strings[0];
                 Player target = Bukkit.getServer().getPlayerExact(playername);
                 if (target != null) {
-                    double bal = moneyManager.getBalance(target.getUniqueId());
-                    System.out.println(ChatColor.GREEN + target.getDisplayName() + "'s balance is " + ChatColor.GOLD + bal + ChatColor.GREEN + " coins.");
+                    try {
+                        double bal = moneyManager.getBalance(target.getUniqueId());
+                        System.out.println(ChatColor.GREEN + target.getDisplayName() + "'s balance is " + ChatColor.GOLD + bal + ChatColor.GREEN + " coins.");
+                    }catch (Exception e){
+                        System.out.printf("Wrong usage. Use /balance <Player> <amount>");
+                    }
                 }
             }
         }

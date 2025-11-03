@@ -1,5 +1,6 @@
 package me.aic1x.simpleEconomy.commands;
 
+import com.sun.jdi.event.ExceptionEvent;
 import me.aic1x.simpleEconomy.data.MoneyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,13 +29,21 @@ public class SetMoneyCommand implements CommandExecutor {
                     if(target==null){
                         p.sendMessage("Player is not online");
                     }else{
-                        moneyManager.setBalance(target.getUniqueId(),val);
-                        p.sendMessage(ChatColor.GREEN+"You set "+ChatColor.RED+target.getDisplayName()+ChatColor.GREEN+"'s balance to "+ChatColor.GOLD+val+ChatColor.GREEN+" coins.");
+                        try {
+                            moneyManager.setBalance(target.getUniqueId(), val);
+                            p.sendMessage(ChatColor.GREEN + "You set " + ChatColor.RED + target.getDisplayName() + ChatColor.GREEN + "'s balance to " + ChatColor.GOLD + val + ChatColor.GREEN + " coins.");
+                        }catch (Exception e){
+                            p.sendMessage(ChatColor.RED+"Wrong usage. Use /setbalance <Player> <amount>");
+                        }
                     }
                 }else if(strings.length==1){
-                    double val = Double.parseDouble(strings[0]);
-                    moneyManager.setBalance(p.getUniqueId(),val);
-                    p.sendMessage(ChatColor.RED+"Your balance was set to "+ChatColor.GOLD+val+ChatColor.GREEN+" coins.");
+                    try {
+                        double val = Double.parseDouble(strings[0]);
+                        moneyManager.setBalance(p.getUniqueId(), val);
+                        p.sendMessage(ChatColor.RED + "Your balance was set to " + ChatColor.GOLD + val + ChatColor.GREEN + " coins.");
+                    }catch(Exception e){
+                        p.sendMessage("Wrong usage. Use /setbalance <Player> <amount>");
+                    }
                 }else{
                     p.sendMessage(ChatColor.RED+"Wrong usage. Use /setbalance <amount> for your balance or /balance <Player> <amount>.");
                 }

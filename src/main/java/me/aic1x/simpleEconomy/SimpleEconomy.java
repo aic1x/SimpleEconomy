@@ -5,6 +5,7 @@ import me.aic1x.simpleEconomy.commands.PayCommand;
 import me.aic1x.simpleEconomy.commands.SetMoneyCommand;
 import me.aic1x.simpleEconomy.data.MoneyManager;
 import me.aic1x.simpleEconomy.listener.JoinListener;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -14,8 +15,12 @@ public final class SimpleEconomy extends JavaPlugin {
 
     private MoneyManager moneyManager;
 
+    FileConfiguration config = this.getConfig();
+
+
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         moneyManager = new MoneyManager(this);
         File balanceFile = new File(getDataFolder(), "balances.yml");
         try {
